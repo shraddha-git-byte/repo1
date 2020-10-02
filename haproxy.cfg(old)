@@ -1,5 +1,5 @@
 global
-   log 127.0.0.1:514 local0 debug
+   log 127.0.0.1:514 local0 info
    chroot /var/lib/haproxy
    stats timeout 30s
    user haproxy
@@ -25,20 +25,16 @@ frontend http_front
    default_backend http_backend
    option httplog
    log global
-
 backend http_backend
    balance leastconn
    cookie SERVERUSED insert indirect nocache
    timeout queue 10
-#  server vlticprodr-02 10.11.165.108:80 cookie vlti check 
-#  server vlticprodr-01 10.11.165.116:80 cookie gsys check 
-   server vlticprodr-02 10.11.165.108:443 cookie vlti check ssl verify none
-   server vlticprodr-01 10.11.165.116:443 cookie gsys check ssl verify none
+   server vlticpro-02.kbzbank.com  10.11.37.108:443 cookie vlti check ssl verify none 
+   server vlticpro.kbzbank.com 10.11.37.116:443 cookie gsys check ssl verify none
 
-listen stats
+ listen stats
    bind *:3001
    stats enable
    stats uri /
    stats realm Haproxy\ Statistics
    stats auth admin:Gene$y$@dm!n
-
